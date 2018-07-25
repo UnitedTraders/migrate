@@ -24,7 +24,9 @@ FROM alpine:3.7
 
 RUN apk add --no-cache ca-certificates
 
+RUN mkdir -p /migrations /usr/local/go/lib/time/
 COPY --from=downloader /go/src/github.com/golang-migrate/migrate/build/migrate.linux-386 /migrate
+COPY --from=downloader /usr/local/go/lib/time/zoneinfo.zip /usr/local/go/lib/time/
 
 ENTRYPOINT ["/migrate"]
 CMD ["--help"]
